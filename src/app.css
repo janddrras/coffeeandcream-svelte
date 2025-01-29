@@ -1,0 +1,55 @@
+/* RESET */
+*,
+*::before,
+*::after {
+	box-sizing: border-box;
+	margin: 0;
+}
+
+body {
+	line-height: 1.5;
+	-webkit-font-smoothing: antialiased;
+	font-family: 'Inter', serif;
+	font-optical-sizing: auto;
+}
+:root {
+	--black: #101010;
+	--red: #684145;
+	--brightRed: #980000;
+	--coffee-dark: #110e0d;
+	--coffee-med: #191513;
+	--coffee-light: #261e1a;
+	--cream-light: #f2edde;
+	--cream-med: #ded9cb;
+	--cream-dark: #8a7259;
+}
+
+img,
+picture,
+video,
+canvas,
+svg {
+	display: block;
+	max-width: 100%;
+}
+
+input,
+button,
+textarea,
+select {
+	font: inherit;
+}
+
+p {
+	text-wrap: pretty;
+	overflow-wrap: break-word;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+	overflow-wrap: break-word;
+	text-wrap: balance;
+}
