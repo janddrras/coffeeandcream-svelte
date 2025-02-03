@@ -1,17 +1,43 @@
 <script lang="ts">
-	const dashArray = (r: number): string => {
-		const circleLength = 2 * Math.PI * r
-		return `${circleLength * 0.75} ${circleLength * 0.25}`
-	}
+	import { gsap } from 'gsap'
+	import { paths } from '$lib/logo'
+	import { draw } from 'svelte/transition'
+
+	const name = 'coffeeandcream'
+	let startDrawing = $state(false)
+
+	$effect(() => {
+		const title = document.querySelectorAll('.letter')
+
+		const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
+
+		tl.add(() => {
+			startDrawing = true
+		}).from(title, {
+			y: 30,
+			opacity: 0,
+			stagger: 0.1,
+			duration: 0.8,
+			delay: 0.5,
+			ease: 'back.out(2)'
+		})
+	})
 </script>
 
 <div class="wrap">
-	<svg width="100" height="100" viewBox="0 0 100 100">
-		<circle cx="50" cy="50" r="40" />
-		<circle cx="50" cy="50" r="30" stroke-dasharray={dashArray(30)} />
-		<circle cx="50" cy="50" r="20" stroke-dasharray={dashArray(20)} />
+	<svg width="124" height="124" viewBox="0 0 124 124" xmlns="http://www.w3.org/2000/svg">
+		{#if startDrawing}
+			{#each paths as path, i}
+				<path d={path} in:draw|global={{ duration: 800, delay: 200 * i }} />
+			{/each}
+		{/if}
 	</svg>
-	<h1>coffeeandcream</h1>
+	<h1>
+		{#each name as letter}
+			<span class="letter">{letter}</span>
+		{/each}
+	</h1>
+	<!-- <button onclick={() => (startDrawing = !startDrawing)}>start</button> -->
 </div>
 
 <style>
@@ -28,14 +54,22 @@
 	}
 	h1 {
 		font-weight: 300;
-		margin-top: 1rem;
+		font-size: 2rem;
+		margin-top: 2.5rem;
+		span {
+			display: inline-block;
+		}
 	}
-	circle {
-		transform-origin: 50% 50%;
-		transform: rotate(45deg);
+	path {
 		stroke: var(--cream-med);
 		stroke-width: 2;
 		stroke-linecap: round;
 		fill: none;
+	}
+	button {
+		position: absolute;
+		bottom: 2rem;
+		left: 2rem;
+		padding: 0.5rem 1rem;
 	}
 </style>
